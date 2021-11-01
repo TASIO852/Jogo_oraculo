@@ -1,20 +1,44 @@
-public class guerreiro{
+public class guerreiro {
 
     public String Nome;
-    public int chute;
+    public int palpiteLevel1;
     public int opcao;
+    public int escolha;
+    public String misericordia;
+
+    
+    public void setNome() {
+        this.Nome = Nome;
+    }
+    public int getVidas(){
+        oraculo magoOraculo = new oraculo(); // chama oraculo
+        return magoOraculo.vidas();
+    }
+
+    public String getNome(){
+        return Nome;
+    }
+    public String vidaExtra(){ 
+        return misericordia;
+    }
 
 
 
-//METODOS DO GUERREIRO
-public void setNome(String nome) {
-    Nome = nome;
-}
-public int chute() {
-    return chute; // retornando pergunta do main do numero
-}
-public int opcao(){
-    return opcao;
-}
+
+    // methodos de jogabilidade
+    public int palpiteLevel1() {
+        return palpiteLevel1;
+    }
+
+    public int opcao() {
+        return opcao;
+    }
+
+    public int escolha() {
+        return escolha;
+    }
+
+
+
 
 }

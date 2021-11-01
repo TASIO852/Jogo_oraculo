@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class oraculo {
 
@@ -8,75 +9,97 @@ public class oraculo {
     public Random rd = new Random();
     public int opcao;
 
-    // METODOS DO ORACULO
+    // nome oraculo
     public void setNome(String nome) {
-        Nome = nome;
+        this.Nome = nome;
     }
-
+    // vidas do guerreio
     public int vidas() {
-        int randomNum = rd.nextInt((12 - 9) + 1) + 9;
+        guerreiro useGuerreiro = new guerreiro(); // chama guerreiro para usar o chute na logica
+        int randomNum = rd.nextInt((12 - 9) + 1) + 1;
+        if (useGuerreiro.palpiteLevel1() != randomNum) {
+            return randomNum - 1;
+        }
         return randomNum;
     }
 
+    // primeira conversa
     public String prologo() {
         String txt = " vamos jogar dois jogas para vc ter um premio e vc tera ";
         return txt;
     }
 
-    // level 1 do jogo de adivinhasao metodo so do oraculo para tirar vida 
-    private int vidaMenosUm(){
-        return vidas() - 1;
-    } 
-
+    // primeiro mini game 
     public int level1() {
         guerreiro useGuerreiro = new guerreiro(); // chama guerreiro para usar o chute na logica
-        int randomNum = rd.nextInt((100 - 1) + 1) + 1;
-        
-        while (randomNum != useGuerreiro.chute()) {
-            // logica do jogo de chute do numero
-            // int randomNum2 = randomNum;
-            // System.out.println(randomNum2);
-            
-            if (useGuerreiro.chute() < randomNum) {
+        int randomNuml1 = rd.nextInt((100 - 1) + 1) + 1;
+
+            if (useGuerreiro.palpiteLevel1() < randomNuml1) {
                 System.out.println("e mais e vc perdeu um ponto de vida");
-                vidaMenosUm();
-                if (vidaMenosUm() <= 9) {
-                    System.out.println("vc morreu"); // se morre encerra o programa ele nao pode ir para lvl 2
-                    System.out.println("o numero Era: " + randomNum); // falar para ele qual era o numero caso morra
-                    break;     
-                }
-                // break;
-            } else if (useGuerreiro.chute() > randomNum) {
+                vidas();
+            } else if (useGuerreiro.palpiteLevel1() > randomNuml1) {
                 System.out.println("e menos e vc perdeu um ponto de vida");
-                vidaMenosUm();
-                if (vidaMenosUm() <= 9) {
-                    System.out.println("vc morreu"); // se morre encerra o programa ele nao pode ir para lvl 2
-                    System.out.println("o numero era: " + randomNum); // falar para ele qual era o numero caso morra
-                    break;
-                }
-                // break;
-            } else {
-                if (randomNum == useGuerreiro.chute()) {
-                    System.out.println("vamos para o level 2");
-                    System.out.println("o numero era: " + randomNum); // falar para ele qual era o numero caso acerte
-                }
-            }
+                vidas();
+            } else if (randomNuml1 == useGuerreiro.palpiteLevel1()) {
+                System.out.println("vamos para o level 2");
+            } else if (vidas() == 0) {
+                System.out.println("vc morreu");    
         }
-        return vidas(); 
+        return vidas();
     }
 
-    public int level2(int opcao) {
+    // segundo mini game
+    public int level2(Scanner opcao) {
         guerreiro useGuerreiro = new guerreiro(); // chama guerreiro
-        int randomNum = rd.nextInt(5);
-        int result;
 
-        if((opcao % 2) == 0){
-            result = randomNum + opcao;
-            return result; //resultado do par ou impar
-         }else{
-            result = randomNum + opcao;
-            return result; //resultado do par ou impar 
-         }  
-        
+        switch (useGuerreiro.escolha()) {
+        case 1:
+            System.out.println("voce escolheu par");
+            break;
+        case 2:
+            System.out.println("voce escolheu impar");
+            break;
+        }
+
+        int randomNum = rd.nextInt(5) + 1;
+        int result;
+        result = useGuerreiro.opcao() + randomNum;
+
+        if ((result % 2) == 0) {
+            System.out.println("resultado deu par");
+            return result;
+        } else {
+            System.out.println("resultado deu impar");
+            return result;
+        } 
     }
+
+    public boolean  decidirVidaExtra(String misericordia){
+        guerreiro useGuerreiro = new guerreiro();
+        misericordia = useGuerreiro.misericordia;
+
+        if (misericordia.length() > 5) {
+            return true;
+        } else {
+            prologoPerdedor();
+            return false;
+        }
+    }
+
+    public String prologoVencedor(){
+        guerreiro useGuerreiro = new guerreiro(); 
+
+        String txt = "vc ganhou" + useGuerreiro.getNome();
+        return txt;
+    }
+    public String prologoPerdedor(){
+        guerreiro useGuerreiro = new guerreiro(); 
+
+        String txt = "vc perdeu" + useGuerreiro.getNome();
+        return txt;
+    }
+
+
+
+
 }
