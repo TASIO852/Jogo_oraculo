@@ -1,55 +1,62 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class Main {
     private static Scanner pedirNome;
-    private static Scanner palpiteLevel1;
-    private static Scanner opcao;
-    private static Scanner escolha;
-    private static Scanner misericordia;
+
+    static int palpite = 0;
+    static int sorteado;
+    int tentativas = 0;
 
     public static void main(String[] args) {
-        oraculo magoOraculo = new oraculo(); // chama oraculo
-        guerreiro useGuerreiro = new guerreiro();// chama guerreiro
+        oraculo magoOraculo = new oraculo();
+        guerreiro useGuerreiro = new guerreiro();
+        Scanner entrada = new Scanner(System.in);
 
-        pedirNome = new Scanner(System.in);// pergunta
-        palpiteLevel1 = new Scanner(System.in); // pergunta
-        opcao = new Scanner(System.in); // pergunta / resposta
-        escolha = new Scanner(System.in); // pergunta / resposta
-        misericordia = new Scanner(System.in); // pergunta /
+        pedirNome = new Scanner(System.in);
+        magoOraculo.Nome = "Mago Drummond";
+        int vidasG = useGuerreiro.getVidas();
+        int vidasGPerda = vidasG;
+        String misericordia = useGuerreiro.vidaExtra();
 
-        magoOraculo.Nome = "Mago Drummond"; // seta nome do oraculo
-        int tentativas = 0;
-
-        System.out.println("Guerreiro meu nome e " + magoOraculo.Nome);
-        System.out.println("Guerreiro qual eo seu nome ? ");
-        useGuerreiro.Nome = pedirNome.nextLine();
-        System.out.println(useGuerreiro.Nome + magoOraculo.prologo() + useGuerreiro.getVidas() + " vidas");
+        // System.out.println("Guerreiro meu nome e " + magoOraculo.Nome);
+        // System.out.println("\nGuerreiro qual eo seu nome ? ");
+        // useGuerreiro.Nome = pedirNome.nextLine();
+        // System.out.println(useGuerreiro.Nome + magoOraculo.prologo() + vidasG + " vidas");
 
         // level 1
-        System.out.println("primeiro jogo vc tera que adivinhar o numero que estou pensando entre 1 e 100");
-        System.out.println("falerei tbm se estiver maior ou menor que o numero ");
-        System.out.println("fale um numero !");
+        Random geradorDeAleatorios = new Random();
+        sorteado = geradorDeAleatorios.nextInt(100) + 1;
+        System.out.println("Número entre 1 e 100 sorteado!");
+
         do {
-            System.out.println("fale outro numero");
-            useGuerreiro.palpiteLevel1 = palpiteLevel1.nextInt();
-            System.out.println("vc tem " + magoOraculo.level1() + " vidas");
-            tentativas++;
-        } while (useGuerreiro.palpiteLevel1 != magoOraculo.level1());
+            System.out.printf("\n\n\n\n-----------------\n");
 
-        // level 2
-        System.out.println("agora vc esta no level 2 " + useGuerreiro.Nome + " vamos jogar par ou impar");
-        System.out.println("coloque [1] para PAR e [2] para IMPAR ");
-        useGuerreiro.escolha = escolha.nextInt();
-        System.out.println("ok agora joque um numero de 1 a 5 ");
-        useGuerreiro.opcao = opcao.nextInt();
-        System.out.println(magoOraculo.level2(opcao));
+            
+            System.out.println("Número de vidas: "  + vidasGPerda + "\n");
 
-        // vida extra game misericordia
+            System.out.print("Qual seu palpite: ");
+            palpite = entrada.nextInt();
 
-        if (useGuerreiro.getVidas() == 0 && magoOraculo.decidirVidaExtra(useGuerreiro.misericordia) == true) {
-            System.out.println("te darei mais uma chance guerrei mas vc tera que fazer um pedido");
-            useGuerreiro.misericordia = misericordia.nextLine();
-            System.out.println(magoOraculo.decidirVidaExtra(useGuerreiro.misericordia));
+            vidasGPerda--;
+
+
+            magoOraculo.level1(palpite, sorteado, vidasGPerda);
+        } while (palpite != sorteado);
+
+        while (true) {
+            // level 2
+            System.out.println("agora vc esta no level 2 " + useGuerreiro.Nome + " vamos jogar par ou impar");
+            System.out.println("ok agora joque um numero de 1 a 5 ");
+            magoOraculo.level2(useGuerreiro.opcao,vidasGPerda);
+            break;
         }
+        // vida extra game misericordia
+        if (useGuerreiro.getVidas() == 0 && magoOraculo.decidirVidaExtra(useGuerreiro.vidaExtra())) {
+            System.out.println("te darei mais uma chance guerrei mas vc tera que fazer um pedido");
+
+            System.out.println(magoOraculo.decidirVidaExtra(useGuerreiro.vidaExtra()));
+        }
+
     }
 }
