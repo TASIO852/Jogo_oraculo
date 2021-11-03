@@ -1,44 +1,25 @@
+import java.util.Scanner;
+
 public class guerreiro {
-
     public String Nome;
-    public int palpiteLevel1;
-    public int opcao;
-    public int escolha;
-    public String misericordia;
-
-    
-    public void setNome() {
+    public int vidas;
+    int opcao;
+   
+    public void setNome(String Nome) {
         this.Nome = Nome;
     }
-    public int getVidas(){
-        oraculo magoOraculo = new oraculo(); // chama oraculo
-        return magoOraculo.vidas();
+
+    public int getVidas() {
+        oraculo magoOraculo = new oraculo();
+        return magoOraculo.setVidas();
     }
 
-    public String getNome(){
+    public String getNome() {
         return Nome;
     }
-    public String vidaExtra(){ 
-        return misericordia;
+
+    public String vidaExtra() {
+        Scanner misericordia = new Scanner(System.in);
+        return misericordia.nextLine();
     }
-
-
-
-
-    // methodos de jogabilidade
-    public int palpiteLevel1() {
-        return palpiteLevel1;
-    }
-
-    public int opcao() {
-        return opcao;
-    }
-
-    public int escolha() {
-        return escolha;
-    }
-
-
-
-
 }
