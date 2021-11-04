@@ -14,7 +14,7 @@ public class oraculo {
     // vidas do guerreio
     public int setVidas() {
         Random vidas = new Random();
-        return vidas.nextInt(4) + 9 ;
+        return vidas.nextInt(4) + 9;
     }
 
     // primeira conversa
@@ -33,57 +33,48 @@ public class oraculo {
                 System.out.println("Seu palpite é menor que o número sorteado.");
             } else {
                 System.out.println("Parabéns, você acertou! O número era " + numero);
-                System.out.println("Você tentou " + vidasGPerda + " vezes antes de acertar!");
-                }
+                System.out.println("Você tem de  " + vidasGPerda + " pontos de vida");
             }
         }
-    
+    }
 
     // segundo mini game
-    public void level2(int opcao,int vidasGPerda) {
-        int num,num2,poi;
-        guerreiro useGuerreiro = new guerreiro();
-        int vidasG = useGuerreiro.getVidas();
+    public void level2(int opcao, int vidasG) {
+        int num, num2, poi;
 
         Scanner in = new Scanner(System.in);
         System.out.println("coloque um numero");
         Random vidas = new Random();
+        
         num2 = vidas.nextInt(5) + 1;
-        num = in.nextInt() + num2 ;
+        num = in.nextInt() + num2;
         poi = (num % 2);
         if (poi == 0) {
-            System.out.println(num  + " e par" );
+            System.out.println(num + " e par " + prologoVencedor());
         } else {
-            System.out.println(num  + " e impar");
+            System.out.println(num + " e impar " + prologoPerdedor());
+            vidasG--;
         }
     }
 
     // vida Extra para o guerreiro
     public boolean decidirVidaExtra(String misericordia) {
-        guerreiro useGuerreiro = new guerreiro();
-        misericordia = useGuerreiro.vidaExtra();
-
-        if (misericordia.length() > 5) {
-            prologoVencedor();
+        if (misericordia.length() >= 5) {
+            System.out.println("te darei mais uma vida guerreiro");
             return true;
         } else {
-            prologoPerdedor();
             return false;
         }
     }
 
     // ultima conversa
     public String prologoVencedor() {
-        guerreiro useGuerreiro = new guerreiro();
-
-        String txt = "vc ganhou" + useGuerreiro.getNome();
+        String txt = "vc ganhou";
         return txt;
     }
 
     public String prologoPerdedor() {
-        guerreiro useGuerreiro = new guerreiro();
-
-        String txt = "vc perdeu" + useGuerreiro.getNome();
+        String txt = "vc perdeu";
         return txt;
     }
 
